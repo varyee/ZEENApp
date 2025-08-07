@@ -92,6 +92,22 @@ class HomeViewController: UIViewController {
     }
     
     
+    func isMovieFavorited(id: Int) -> Bool {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+        fetchRequest.fetchLimit = 1
+
+        do {
+            let count = try context.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print("Error checking if movie is favorited: \(error)")
+            return false
+        }
+    }
+    
+    
     
     
 //    func searchBar() {
@@ -205,7 +221,9 @@ extension HomeViewController: UICollectionViewDataSource{
         //Create a reusable cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
         
-        let movie = isSearching ? searchResults[indexPath.item] : movies[indexPath.item]
+        var movie = isSearching ? searchResults[indexPath.item] : movies[indexPath.item]
+        let isFavorite = isMovieFavorited(id: movie.id)
+        movie.isFavorite = isFavorite
         cell.configure(with: movie)
         
         cell.delegate = self

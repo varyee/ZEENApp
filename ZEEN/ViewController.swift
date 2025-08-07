@@ -45,7 +45,9 @@ class ViewController: UIViewController {
 //            print("Hey I got here")
 //            var results =  homeVC.movies
 //            print("this is the favorites view: \(results)")
-            favoritesVC.favoriteMovies = homeVC.movies.filter { $0.isFavorite }
+            //favoritesVC.favoriteMovies = homeVC.movies.filter { $0.isFavorite }
+            //favoritesVC.tableView.reloadData()
+            favoritesVC.fetchFavoritesFromCoreData()
             favoritesVC.tableView.reloadData()
             firstView.alpha = 0
             secondView.alpha = 1

@@ -27,6 +27,7 @@ class FavoritesViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view did load in controller")
         fetchFavoritesFromCoreData()
         
         //searchBar()
@@ -64,6 +65,13 @@ class FavoritesViewController: UIViewController{
         tableView.delegate = self
 
       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("view will appear in controller")
+        super.viewWillAppear(animated)
+        fetchFavoritesFromCoreData()
+        tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
